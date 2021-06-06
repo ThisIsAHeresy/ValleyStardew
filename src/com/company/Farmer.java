@@ -5,7 +5,7 @@ public class Farmer {
     public String name;
 
     public Farmer(String name) {
-        this.cash = 5000;
+        this.cash = 15000.0;
         this.name = name;
     }
 }

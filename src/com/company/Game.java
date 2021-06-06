@@ -14,6 +14,13 @@ public class Game {
     public ArrayList <Farmer> players;
     public ArrayList <Farm> farms;
 
+    public Game(int weeks, int year) {
+        this.weeks = weeks;
+        this.year = year;
+        this.players = new ArrayList<Farmer>();
+        this.farms = new ArrayList<Farm>();
+    }
+
     public void startGame() {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter your name: ");
@@ -27,9 +34,35 @@ public class Game {
         int building_count = ThreadLocalRandom.current().nextInt(0, 3);
         Building[] buildings = {new Barn(3), new Coop(3), new Field(2), new Greenhouse(3), new Stable(4)};
         for (int i = 0; i < building_count; i++) {
-            farm.addBuilding(buildings[ThreadLocalRandom.current().nextInt(0, 5)]);
+            try {
+                farm.addBuilding(buildings[ThreadLocalRandom.current().nextInt(0, 5)]);
+            } catch (Exception e) { // Should never happen but ¯\_(ツ)_/¯
+                continue;
+            }
         }
         return farm;
+    }
+
+    public void buyingFarm() {
+        Farm[] farms = {generateFarm(), generateFarm(), generateFarm()};
+        Scanner in = new Scanner(System.in);
+        System.out.println("Choose one of the available farms below: ");
+        for (int i = 0; i < 3; i++) {
+            System.out.println(i+1 + ". " + farms[i].toString());
+        }
+        System.out.println("4. Exit");
+        String answer = in.nextLine();
+        if ("123".contains(answer) && answer.length() == 1) {
+            Farm chosen_farm = farms[Integer.parseInt(answer) - 1];
+            try {
+                if (chosen_farm.purchase(this.players.get(0))) {
+                    chosen_farm.setOwner(this.players.get(0));
+                    this.farms.add(chosen_farm);
+                }
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        }
     }
 
     public void userChoice() {
@@ -39,7 +72,7 @@ public class Game {
             String answer = in.nextLine();
             switch (answer) {
                 case "1":
-                    break;
+                    this.buyingFarm();
                 case "2":
                     break;
                 case "3":

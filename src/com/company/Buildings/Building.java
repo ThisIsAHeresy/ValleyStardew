@@ -17,4 +17,8 @@ public abstract class Building {
         this.cost = cost;
     }
 
+    @Override
+    public String toString() {
+        return name + " of size " + size + ".";
+    }
 }
