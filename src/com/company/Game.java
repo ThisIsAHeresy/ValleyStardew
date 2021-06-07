@@ -43,6 +43,16 @@ public class Game {
         return farm;
     }
 
+    public ArrayList <Farm> getFarmsOwnedByPlayer(Farmer owner) {
+        ArrayList <Farm> farms = new ArrayList<Farm>();
+        for (Farm farm:this.farms) {
+            if (farm.owner == owner) {
+                farms.add(farm);
+            }
+        }
+        return farms;
+    }
+
     public void buyingFarm() {
         Farm[] farms = {generateFarm(), generateFarm(), generateFarm()};
         Scanner in = new Scanner(System.in);
@@ -67,7 +77,7 @@ public class Game {
 
     public void userChoice() {
         while (true) {
-            System.out.println("Take action:\n1. Buy a farm\n2. Manage farm\n4. Buy animals or plants\n7. Sell plants or animals\n8. Check storage\n9. View information about animals\n10. View information about plants\n11. Exit game");
+            System.out.println("Take action:\n1. Buy a farm\n2. Manage farm\n3. Buy animals or plants\n4. Sell plants or animals\n5. Check storage\n6. View information about animals\n7. View information about plants\n8. Exit game");
             Scanner in = new Scanner(System.in);
             String answer = in.nextLine();
             switch (answer) {

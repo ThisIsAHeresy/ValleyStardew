@@ -1,5 +1,7 @@
 package com.company.Buildings;
 
+import com.company.Farmer;
+
 public enum BuildingType {
     FIELD, COOP, BARN, STABLES, GREENHOUSE
 }
@@ -7,7 +9,7 @@ public enum BuildingType {
 interface BuildingMethods {
     public double getWorth();
     public boolean sell();
-    public boolean purchase();
+    public boolean purchase(Farmer farmer);
 }
 
 public abstract class Building implements BuildingMethods {

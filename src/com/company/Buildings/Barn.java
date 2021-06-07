@@ -1,5 +1,7 @@
 package com.company.Buildings;
 
+import com.company.Farmer;
+
 public class Barn extends Building {
     public Barn(int size) {
         super(size, "Barn", BuildingType.BARN, 3100.0);
@@ -16,7 +18,7 @@ public class Barn extends Building {
     }
 
     @Override
-    public boolean purchase() {
+    public boolean purchase(Farmer farmer) {
         return false;
     }
 }
