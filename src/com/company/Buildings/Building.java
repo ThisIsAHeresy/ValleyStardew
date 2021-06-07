@@ -1,20 +1,26 @@
 package com.company.Buildings;
 
-enum BuildingType {
+public enum BuildingType {
     FIELD, COOP, BARN, STABLES, GREENHOUSE
 }
 
-public abstract class Building {
+interface BuildingMethods {
+    public double getWorth();
+    public boolean sell();
+    public boolean purchase();
+}
+
+public abstract class Building implements BuildingMethods {
     public int size;
     public String name;
     public BuildingType type;
-    public double cost;
+    public double baseWorth;
 
-    public Building(int size, String name, BuildingType type, Double cost) {
+    public Building(int size, String name, BuildingType type, Double baseWorth) {
         this.size = size;
         this.name = name;
         this.type = type;
-        this.cost = cost;
+        this.baseWorth = baseWorth;
     }
 
     @Override

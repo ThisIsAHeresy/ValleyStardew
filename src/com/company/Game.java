@@ -67,7 +67,7 @@ public class Game {
 
     public void userChoice() {
         while (true) {
-            System.out.println("Take action:\n1. Buy a farm\n2. Buy/sell land field\n3. Buy new buildings\n4. Buy animals or plants\n5. Plant plants\n6. Collect yield\n7. Sell plants or animals\n8. Check storage\n9. View information about animals\n10. View information about plants\n11. Exit game");
+            System.out.println("Take action:\n1. Buy a farm\n2. Manage farm\n4. Buy animals or plants\n7. Sell plants or animals\n8. Check storage\n9. View information about animals\n10. View information about plants\n11. Exit game");
             Scanner in = new Scanner(System.in);
             String answer = in.nextLine();
             switch (answer) {
