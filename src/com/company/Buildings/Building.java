@@ -2,13 +2,9 @@ package com.company.Buildings;
 
 import com.company.Farmer;
 
-public enum BuildingType {
-    FIELD, COOP, BARN, STABLES, GREENHOUSE
-}
-
 interface BuildingMethods {
     public double getWorth();
-    public boolean sell();
+    public boolean sell(Farmer farmer);
     public boolean purchase(Farmer farmer);
 }
 

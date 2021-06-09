@@ -85,8 +85,11 @@ public class Farm {
                 if (answerInt > building.length || answerInt < 0) {
                     System.out.println("Provide a valid number!");
                 } else {
-                    building[answerInt].purchase(this.owner);
-                    this.buildings.add(building[answerInt]);
+                    if (building[answerInt].purchase(this.owner)) {
+                        this.buildings.add(building[answerInt]);
+                    } else {
+                        System.out.println("You don't have enough money to buy this building!");
+                    }
                     return;
                 }
             }
@@ -102,14 +105,41 @@ public class Farm {
         System.out.println(this.toString());
         System.out.println("You can do the following:\n" +
                 "1. Buy buildings/fields\n" +
-                "2. Plant plants\n" +
-                "3. Collect yield");
+                "2. Sell buildings/fields\n" +
+                "3. Plant plants\n" +
+                "4. Collect yield");
         Scanner in = new Scanner(System.in);
         String answer = in.nextLine();
         if (answer.equals("1")) {
             this.buildingManager();
         } else if (answer.equals("2")) {
+            this.buildingManagerSell();
+        } else if (answer.equals("3")) {
 
+        }
+    }
+
+    private void buildingManagerSell() {
+        System.out.println("You can sell the following buildings:");
+        int x = 1;
+        for (Building building:this.buildings) {
+            System.out.println(x+ ". "+building.toString());
+            x++;
+        }
+        System.out.println(x+1 + ". Exit");
+        Scanner in = new Scanner(System.in);
+        String answer = in.nextLine();
+        int answerInt = 0;
+        try {
+            answerInt = Integer.parseInt(answer);
+        } catch (Exception e) {
+            System.out.println("Provide a valid number!");
+            return;
+        }
+        if (answerInt == x+1 || answerInt < 0 || answerInt > x) {
+            return;
+        } else {
+            buildings.get(answerInt).sell(this.owner);
         }
     }
 

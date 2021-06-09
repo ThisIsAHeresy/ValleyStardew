@@ -84,7 +84,13 @@ public class Game {
                 case "1":
                     this.buyingFarm();
                 case "2":
-                    break;
+                    try {
+                        Farm farm = getFarmsOwnedByPlayer(this.players.get(0)).get(0);
+                        farm.doTasks();
+                    } catch (Exception e) {
+                        System.out.println("You don't have any farms!");
+                    }
+                }
                 case "3":
                     break;
                 case "4":
