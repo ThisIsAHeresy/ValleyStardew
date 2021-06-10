@@ -8,9 +8,12 @@ public class Potato extends Plant {
     }
 
     @Override
-    public double yield(Farmer farmer) throws Exception {
+    public void yield(Farmer farmer) throws Exception {
         if (farmer.cash < this.collectionCostPerUnit * this.plantsPerUnit) {
             throw new Exception("You do not have enough money to collect the "+this.name+" plant!");
+        }
+        if (this.growthStatus < this.maturityWeek) {
+            throw new Exception("This plant is not ready to be collected yet!");
         }
         this.count = this.plantsPerUnit;
         farmer.inventory.add(this);

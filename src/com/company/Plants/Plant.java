@@ -3,7 +3,7 @@ package com.company.Plants;
 import com.company.Farmer;
 
 interface PlantMethods {
-    public double yield(Farmer farmer) throws Exception;
+    public void yield(Farmer farmer) throws Exception;
     public boolean sell(Farmer farmer);
     public boolean purchase(Farmer farmer);
 }

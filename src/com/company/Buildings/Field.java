@@ -20,11 +20,12 @@ public class Field extends Building {
         if (!(plant.possibleToPlantWeek > game.weeks || plant.possibleToPlantWeekEnd < game.weeks)) {
             throw new Exception("This plant cannot be planted at this time of year!");
         }
+        this.plants.add(plant);
     }
 
     @Override
     public double getWorth() {
-        return this.baseWorth + (size * 400);
+        return this.baseWorth + ((size-1) * 400);
     }
 
     @Override
@@ -40,5 +41,10 @@ public class Field extends Building {
         }
         farmer.cash -= getWorth();
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " Space left (" + plants.size() + "/" + this.size * 5 + ")";
     }
 }

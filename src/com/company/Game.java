@@ -74,6 +74,11 @@ public class Game {
             }
         }
     }
+    
+    public void shop() {
+        System.out.println("Choose what to buy:");
+
+    }
 
     public void userChoice() {
         while (true) {
@@ -84,40 +89,54 @@ public class Game {
                 case "1":
                     this.buyingFarm();
                 case "2":
+                    Farm farm = null;
                     try {
-                        Farm farm = getFarmsOwnedByPlayer(this.players.get(0)).get(0);
-                        farm.doTasks();
+                        farm = getFarmsOwnedByPlayer(this.players.get(0)).get(0);
                     } catch (Exception e) {
                         System.out.println("You don't have any farms!");
                     }
-                }
+                    try {
+                        farm.doTasks(this);
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
                 case "3":
-                    break;
+                    this.shop();
                 case "4":
-                    break;
+                    this.sellShop();
                 case "5":
-                    break;
+                    this.checkStorage();
                 case "6":
                     break;
                 case "7":
                     break;
                 case "8":
-                    break;
-                case "9":
-                    break;
-                case "10":
-                    break;
-                case "11":
                     System.exit(0);
                 default:
-                    System.out.println("Please choose a valid action (number from 1 to 11)");
+                    System.out.println("Please choose a valid action (number from 1 to 8)");
                     break;
             }
         }
     }
 
+    private void checkStorage() {
+    }
+
+    private void sellShop() {
+    }
+
+    private void gameOver(String reason) {
+        System.out.println("Game over! You have ran out of money "+reason);
+        System.exit(0);
+    }
+
     public void tick() {
         this.userChoice();
-
+        for (Farm farm:this.farms) {
+            Farmer owner = farm.owner;
+            if (!(farm.tickFarm())) {
+                this.gameOver("while keeping the farm safe.");
+            }
+        }
     }
 }
