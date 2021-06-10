@@ -140,11 +140,11 @@ public class Farm {
         if (answerInt == fields.size()+1 || answerInt < 0 || answerInt > fields.size()) {
             return;
         } else {
-            Field field = fields.get(answerInt);
+            Field field = fields.get(answerInt-1);
             System.out.println("Choose a plant to plant:");
             ArrayList<Plant> plants = new ArrayList<Plant>();
             for (Object item:this.owner.inventory) {
-                if (item.getClass() == Plant.class) {
+                if (Plant.class.isAssignableFrom(item.getClass())) {
                     System.out.println(plants.size()+1 + ". "+item.toString());
                     plants.add((Plant) item);
                 }
@@ -161,7 +161,7 @@ public class Farm {
                 return;
             } else {
                 try {
-                    field.plantPlant(plants.get(answerInt-1), game);
+                    field.plantPlant(plants.get(answerInt-1), game, this.owner);
                 } catch (Exception e) {
                     System.out.println(e.toString());
                     return;
@@ -176,7 +176,8 @@ public class Farm {
                 "1. Buy buildings/fields\n" +
                 "2. Sell buildings/fields\n" +
                 "3. Plant plants\n" +
-                "4. Collect yield");
+                "4. Collect yield\n" +
+                "5. Exit");
         Scanner in = new Scanner(System.in);
         String answer = in.nextLine();
         if (answer.equals("1")) {

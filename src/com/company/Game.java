@@ -2,6 +2,8 @@ package com.company;
 
 import com.company.Buildings.*;
 import com.company.Farms.Farm;
+import com.company.Plants.Plant;
+import com.company.Plants.Potato;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -74,15 +76,36 @@ public class Game {
             }
         }
     }
+
+    public void buyItem(Plant item) {
+        Farmer owner = this.players.get(0);
+        try {
+            item.purchase(owner);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return;
+        }
+        System.out.println("Item bought successfully!");
+
+    }
     
     public void shop() {
         System.out.println("Choose what to buy:");
-
+        System.out.println("1. Potato ($11)\n2. Exit");
+        Scanner in = new Scanner(System.in);
+        String answer = in.nextLine();
+        switch (answer) {
+            case "1":
+                this.buyItem(new Potato());
+                break;
+            case "2":
+                return;
+        }
     }
 
     public void userChoice() {
         while (true) {
-            System.out.println("Take action:\n1. Buy a farm\n2. Manage farm\n3. Buy animals or plants\n4. Sell plants or animals\n5. Check storage\n6. View information about animals\n7. View information about plants\n8. Exit game");
+            System.out.println("Take action:\n1. Buy a farm\n2. Manage farm\n3. Buy animals or plants\n4. Sell plants or animals\n5. Check storage\n6. View information about animals\n7. View information about plants\n8. Next week\n9. Exit game");
             Scanner in = new Scanner(System.in);
             String answer = in.nextLine();
             switch (answer) {
@@ -100,17 +123,23 @@ public class Game {
                     } catch (Exception e) {
                         System.out.println(e.toString());
                     }
+                    break;
                 case "3":
                     this.shop();
+                    break;
                 case "4":
                     this.sellShop();
+                    break;
                 case "5":
                     this.checkStorage();
+                    break;
                 case "6":
                     break;
                 case "7":
                     break;
                 case "8":
+                    break;
+                case "9":
                     System.exit(0);
                 default:
                     System.out.println("Please choose a valid action (number from 1 to 8)");
@@ -120,6 +149,9 @@ public class Game {
     }
 
     private void checkStorage() {
+        for (Object item:this.players.get(0).inventory) {
+            System.out.println(item.toString());
+        }
     }
 
     private void sellShop() {
@@ -137,6 +169,12 @@ public class Game {
             if (!(farm.tickFarm())) {
                 this.gameOver("while keeping the farm safe.");
             }
+        }
+        if (this.weeks > 52) {
+            this.year++;
+            this.weeks = 1;
+        } else {
+            this.weeks++;
         }
     }
 }

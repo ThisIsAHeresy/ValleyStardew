@@ -13,13 +13,18 @@ public class Field extends Building {
         this.plants = new ArrayList<Plant>();
     }
 
-    public void plantPlant(Plant plant, Game game) throws Exception {
+    public void plantPlant(Plant plant, Game game, Farmer farmer) throws Exception {
         if (this.plants.size() >= this.size * 5) {
             throw new Exception("Not enough of space on the field!");
         }
         if (!(plant.possibleToPlantWeek > game.weeks || plant.possibleToPlantWeekEnd < game.weeks)) {
             throw new Exception("This plant cannot be planted at this time of year!");
         }
+        if (farmer.cash < plant.preparationCost) {
+            throw new Exception("Cannot plant a plant since you don't have enough of money to prepare the ground for it!");
+        }
+        farmer.cash -= plant.preparationCost;
+        farmer.inventory.remove(plant);
         this.plants.add(plant);
     }
 
