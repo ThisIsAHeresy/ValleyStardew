@@ -2,8 +2,7 @@ package com.company;
 
 import com.company.Buildings.*;
 import com.company.Farms.Farm;
-import com.company.Plants.Plant;
-import com.company.Plants.Potato;
+import com.company.Plants.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -91,7 +90,7 @@ public class Game {
     
     public void shop() {
         System.out.println("Choose what to buy:");
-        System.out.println("1. Potato ($11)\n2. Exit");
+        System.out.println("1. Potato ($11)\n2. Carrot ($15)\n3. Onion ($30)\n4. Cabbage ($50)\n5. Cucumber ($55)\n6. Exit");
         Scanner in = new Scanner(System.in);
         String answer = in.nextLine();
         switch (answer) {
@@ -99,12 +98,25 @@ public class Game {
                 this.buyItem(new Potato());
                 break;
             case "2":
+                this.buyItem(new Carrot());
+                break;
+            case "3":
+                this.buyItem(new Onion());
+                break;
+            case "4":
+                this.buyItem(new Cabbage());
+                break;
+            case "5":
+                this.buyItem(new Cucumber());
+                break;
+            case "6":
                 return;
         }
     }
 
     public void userChoice() {
         while (true) {
+            System.out.println("Year " + this.year + ", week "+this.weeks + ". Current budget: "+this.players.get(0).cash);
             System.out.println("Take action:\n1. Buy a farm\n2. Manage farm\n3. Buy animals or plants\n4. Sell plants or animals\n5. Check storage\n6. View information about animals\n7. View information about plants\n8. Next week\n9. Exit game");
             Scanner in = new Scanner(System.in);
             String answer = in.nextLine();
@@ -138,7 +150,7 @@ public class Game {
                 case "7":
                     break;
                 case "8":
-                    break;
+                    return;
                 case "9":
                     System.exit(0);
                 default:

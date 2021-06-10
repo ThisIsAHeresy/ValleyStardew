@@ -17,7 +17,7 @@ public class Field extends Building {
         if (this.plants.size() >= this.size * 5) {
             throw new Exception("Not enough of space on the field!");
         }
-        if (!(plant.possibleToPlantWeek > game.weeks || plant.possibleToPlantWeekEnd < game.weeks)) {
+        if (plant.possibleToPlantWeek > game.weeks || plant.possibleToPlantWeekEnd < game.weeks) {
             throw new Exception("This plant cannot be planted at this time of year!");
         }
         if (farmer.cash < plant.preparationCost) {
@@ -50,6 +50,6 @@ public class Field extends Building {
 
     @Override
     public String toString() {
-        return super.toString() + " Space left (" + plants.size() + "/" + this.size * 5 + ")";
+        return super.toString() + " Space used (" + plants.size() + "/" + this.size * 5 + ")";
     }
 }
