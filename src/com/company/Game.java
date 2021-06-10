@@ -167,6 +167,9 @@ public class Game {
     }
 
     private void sellShop() {
+        this.checkStorage();
+        System.out.println("Which item would you like to sell?");
+
     }
 
     private void gameOver(String reason) {

@@ -7,6 +7,7 @@ import com.company.Plants.Plant;
 
 import javax.lang.model.type.NullType;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Farm {
     public int size;
@@ -28,9 +29,21 @@ public class Farm {
     public boolean tickFarm() {
         for (Building building:this.buildings) {
             if (building.getClass() == Field.class) {
+                boolean killPlant = false;
                 for (Plant plant:((Field) building).plants) {
-                    this.owner.cash -= plant.protectionCost; // take protection cost for the week
+                    if (this.owner.cash > plant.protectionCost) {
+                        this.owner.cash -= plant.protectionCost; // take protection cost for the week
+                    } else {
+                        if (ThreadLocalRandom.current().nextInt(0, 20) == 2) {
+                            killPlant = true;
+                        }
+                    }
                     plant.growthStatus += 1; // grow plant by one week
+                }
+                if (killPlant) {
+                    int randomPlant = ThreadLocalRandom.current().nextInt(0, ((Field) building).plants.size()-1);
+                    System.out.println(((Field) building).plants.get(randomPlant).name + " got destroyed as you didn't have enough money to protect the plant!");
+                    ((Field) building).plants.remove(randomPlant); // remove random plant
                 }
             }
         }
@@ -194,14 +207,16 @@ public class Farm {
     private void collectPlants() {
         for (Building building:this.buildings) {
             if (building.getClass() == Field.class) {
+                ArrayList<Plant> toRemove = new ArrayList<Plant>();
                 for (Plant plant:((Field) building).plants) {
                     try {
                         plant.yield(this.owner);
-                        ((Field) building).plants.remove(plant); // hope it doesn't crash like in python for changed list during iteration
+                        toRemove.add(plant);
                     } catch (Exception e) {
                         continue;
                     }
                 }
+                ((Field) building).plants.removeAll(toRemove);
             }
         }
         System.out.println("Plants collected!");

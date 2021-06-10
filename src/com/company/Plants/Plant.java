@@ -47,12 +47,16 @@ public abstract class Plant implements PlantMethods {
         farmer.inventory.add(this);
     }
 
-    public boolean sell(Farmer farmer) {
+    public double getWorth() {
         if (this.growthStatus < this.maturityWeek) {
-            farmer.cash += 0.9*this.sellPrice;
+            return 0.9*this.sellPrice * this.count;
         } else {
-            farmer.cash += this.sellPrice;
+            return this.sellPrice * this.count;
         }
+    }
+
+    public boolean sell(Farmer farmer) {
+        farmer.cash += this.getWorth();
         return true;
     }
 
@@ -67,6 +71,6 @@ public abstract class Plant implements PlantMethods {
 
     @Override
     public String toString() {
-        return name + " ("+count+"), worth: " + sellPrice + ", ";
+        return name + " ("+count+"), worth: " + this.getWorth() + ", ";
     }
 }
