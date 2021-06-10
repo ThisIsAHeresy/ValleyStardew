@@ -5,6 +5,7 @@ import com.company.Farms.Farm;
 import com.company.Plants.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -161,20 +162,54 @@ public class Game {
     }
 
     private void checkStorage() {
+        int x = 0;
         for (Object item:this.players.get(0).inventory) {
-            System.out.println(item.toString());
+            System.out.println((x+1) + ". " + item.toString());
+            x++;
         }
     }
 
     private void sellShop() {
         this.checkStorage();
         System.out.println("Which item would you like to sell?");
-
+        Scanner in = new Scanner(System.in);
+        String answer = in.nextLine();
+        int answerInt = 0;
+        try {
+            answerInt = Integer.parseInt(answer);
+        } catch (Exception e) {
+            System.out.println("Provide a valid number!");
+            return;
+        }
+        if (answerInt == this.players.get(0).inventory.size()+1 || answerInt < 1 || answerInt > this.players.get(0).inventory.size()) {
+            return;
+        } else {
+            Plant item = (Plant) this.players.get(0).inventory.get(answerInt-1);
+            item.sell(this.players.get(0));
+        }
     }
 
     private void gameOver(String reason) {
         System.out.println("Game over! You have ran out of money "+reason);
         System.exit(0);
+    }
+
+    private void checkWinConditions() {
+        int hectare = 0; // Other conditions not implemented yet
+        HashSet<Class> typesOfItems = new HashSet<Class>();
+        for (Farm farm:getFarmsOwnedByPlayer(this.players.get(0))) {
+            for (Building building:farm.buildings) {
+                if (building.type == BuildingType.FIELD) {
+                    hectare += building.size * 5;
+                }
+            }
+            for (Object object:this.players.get(0).inventory) {
+                typesOfItems.add(object.getClass());
+            }
+        }
+        if (hectare > 20 && typesOfItems.size() > 4) {
+            System.out.println("Game over, you win! Congratulations!");
+        }
     }
 
     public void tick() {
@@ -191,5 +226,6 @@ public class Game {
         } else {
             this.weeks++;
         }
+        this.checkWinConditions();
     }
 }

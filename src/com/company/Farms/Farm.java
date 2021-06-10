@@ -170,7 +170,7 @@ public class Farm {
                 System.out.println("Provide a valid number!");
                 return;
             }
-            if (answerInt == plants.size()+1 || answerInt < 0 || answerInt > plants.size()) {
+            if (answerInt == plants.size()+1 || answerInt < 1 || answerInt > plants.size()) {
                 return;
             } else {
                 try {

@@ -57,6 +57,7 @@ public abstract class Plant implements PlantMethods {
 
     public boolean sell(Farmer farmer) {
         farmer.cash += this.getWorth();
+        farmer.inventory.remove(this);
         return true;
     }
 
